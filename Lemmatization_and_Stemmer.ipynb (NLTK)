@@ -1,0 +1,200 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Lemmatization and Stemmer",
+      "provenance": [],
+      "authorship_tag": "ABX9TyPAkofT590PJVRN8uYGZiKp",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Satyake/NLP/blob/master/Lemmatization_and_Stemmer.ipynb%20(NLTK)\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "e3BzdTJFS3Aw"
+      },
+      "source": [
+        "import nltk\r\n",
+        "import spacy"
+      ],
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "8eFMcFXZS5On"
+      },
+      "source": [
+        "from nltk.stem.porter import PorterStemmer\r\n",
+        "from nltk.stem.snowball import SnowballStemmer\r\n",
+        "ps=PorterStemmer()\r\n",
+        "ss=SnowballStemmer(language='english')"
+      ],
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "dqxykJ5bTAST"
+      },
+      "source": [
+        "words=['run','runner','ran','doggerino','easily']"
+      ],
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "az3_yWSwTHU0",
+        "outputId": "ea33c168-5a40-4a91-f950-3475e17740ae"
+      },
+      "source": [
+        "for w in words:\r\n",
+        "  print(ss.stem(w))"
+      ],
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "run\n",
+            "runner\n",
+            "ran\n",
+            "doggerino\n",
+            "easili\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "ujqyeSnMi2UZ"
+      },
+      "source": [
+        "nlp=spacy.load('en_core_web_sm')\r\n",
+        "doc1=nlp(u\"I am a runner running in a race because i love to run since i ran from childhood\")"
+      ],
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "85Xc1ElhjCR9",
+        "outputId": "2c7b693d-78a4-4851-c378-05e3574003cf"
+      },
+      "source": [
+        "for token in doc1:\r\n",
+        "  print(token,token.lemma_)#Lemmatization"
+      ],
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "I -PRON-\n",
+            "am be\n",
+            "a a\n",
+            "runner runner\n",
+            "running run\n",
+            "in in\n",
+            "a a\n",
+            "race race\n",
+            "because because\n",
+            "i i\n",
+            "love love\n",
+            "to to\n",
+            "run run\n",
+            "since since\n",
+            "i i\n",
+            "ran run\n",
+            "from from\n",
+            "childhood childhood\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "dlJESmp_kXgt",
+        "outputId": "dd5552f7-3359-441a-e80d-ae4c01cc8c47"
+      },
+      "source": [
+        "print(nlp.Defaults.stop_words)"
+      ],
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "{'now', 'first', 'with', 'we', 'be', '’d', 'used', 'by', 'here', 'him', 'though', 'hereby', 'alone', 'therein', 'sometime', 'a', 'during', '‘d', 'thereafter', 'twenty', 'yourselves', \"'d\", 'whereby', 'onto', 'i', 'down', 'hence', 'how', 'nowhere', 'formerly', 'side', 'afterwards', 'beside', 'latterly', 'mostly', 'somewhere', 'am', 'into', 'seem', 'itself', 'thereupon', 'anyway', 'whither', 'besides', 'almost', 'ten', 'were', 'on', 'whom', 'own', '’s', 'between', 'hundred', 'several', 'latter', 'amount', 'among', 'back', 'nevertheless', 'hereupon', 'no', 'was', 'somehow', 'thence', 'eight', 'full', 'not', 'because', 'otherwise', 'sixty', 'their', 'often', 'bottom', 'below', 'may', 'very', 'too', 'your', 'only', 'if', 'my', 'part', 'see', 'behind', 'why', 'without', 'ever', 'when', '‘ll', 'each', 'once', 'really', 'might', 'n’t', 'however', 'twelve', 'rather', 'everyone', 'nothing', 'herein', 'unless', 'can', 'us', \"'ll\", 'put', 'do', 'seems', 'is', 'myself', 'say', 'this', \"'ve\", 'for', 'his', 'take', 'against', 'them', \"'re\", 'keep', 'becoming', 'due', 'per', 'before', 'such', 'made', 'nor', 'throughout', 'elsewhere', 'namely', 'moreover', 'six', 'someone', 'could', 'hers', 'which', \"n't\", 'does', 'along', 'doing', 'even', 'to', 'the', 'together', 'where', 'every', 'others', 'whereupon', '‘s', 'thus', 'forty', 'least', 'always', 'enough', 'yours', 'anything', 'whether', 'of', 'under', 'indeed', 'it', 'who', 'fifteen', 'except', 'all', 'after', 'done', 'further', 'whence', 'toward', 'regarding', 'then', 'just', 'none', '’ll', 'whatever', 'give', 'never', 'seeming', 'else', 'at', 'third', 'will', 'anyhow', 'meanwhile', 'seemed', 'these', 'those', 'serious', 'something', 'yet', 'cannot', 'eleven', 'but', 'above', 'four', 'becomes', 'few', 'that', 'any', 'there', 'empty', 'did', 'being', 'should', 'they', 'from', 'top', 'he', 'whose', 'beyond', 'everywhere', 'both', 'herself', 'ours', 'many', 'another', 'everything', \"'s\", 'name', 'also', 'wherein', 'again', 'same', 'whereas', 'over', '’re', 'quite', 'last', 'sometimes', 'until', 'front', 'various', 'wherever', 'some', 'still', 'three', 'about', 'well', 'upon', 'what', 're', 'n‘t', 'other', 'are', 'her', 'and', '’m', 'beforehand', 'already', 'within', 'via', 'amongst', 'much', 'ourselves', 'had', '‘re', 'off', 'thereby', 'move', 'been', 'so', 'than', \"'m\", 'former', 'himself', 'me', 'since', 'up', 'as', 'its', 'whenever', 'have', 'became', 'hereafter', 'must', 'noone', 'get', 'less', 'or', 'an', 'please', '‘ve', 'while', 'anyone', 'anywhere', 'become', 'therefore', 'out', 'next', 'call', 'you', 'either', 'more', 'one', 'ca', 'across', 'around', 'go', 'show', 'make', 'she', '’ve', 'mine', 'thru', 'using', '‘m', 'themselves', 'nine', 'perhaps', 'through', 'two', 'although', 'would', 'whole', 'in', 'nobody', 'most', 'our', 'neither', 'yourself', 'whereafter', 'five', 'whoever', 'fifty', 'has', 'towards'}\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "kkaZmvaEkjmO",
+        "outputId": "ca19daa1-bfdf-4d1e-8b0e-577dd4aa65ab"
+      },
+      "source": [
+        "nlp.vocab['shit'].is_stop  #checking if its a stop word\r\n",
+        "#adding a stop word to the stop words list\r\n",
+        "nlp.Defaults.stop_words.add('btw')\r\n",
+        "nlp.vocab['btw'].is_stop"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 15
+        }
+      ]
+    }
+  ]
+}
